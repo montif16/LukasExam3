@@ -29,7 +29,7 @@ public class ApplicationConfig {
     }
 
     public static String getProperty(String propName) throws IOException {
-        try (InputStream is = HibernateConfig.class.getClassLoader().getResourceAsStream("properties-from-pom.properties")) {
+        try (InputStream is = app.config.HibernateConfig.class.getClassLoader().getResourceAsStream("properties-from-pom.properties")) {
             Properties prop = new Properties();
             prop.load(is);
             return prop.getProperty(propName);
@@ -40,8 +40,6 @@ public class ApplicationConfig {
     }
 
     public static Javalin startServer(int port) {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-
         routes = new AppRoutes();
 
         var app = Javalin.create(ApplicationConfig::configuration);

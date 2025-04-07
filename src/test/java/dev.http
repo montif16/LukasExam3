@@ -1,0 +1,75 @@
+### Populate database
+POST http://localhost:7070/skilessons/populate
+
+###
+
+### Get all ski lessons
+GET http://localhost:7070/skilessons
+
+###
+
+### Get ski lesson by ID
+GET http://localhost:7070/skilessons/1
+
+###
+
+### Create a new ski lesson
+POST http://localhost:7070/skilessons
+Content-Type: application/json
+
+{
+  "name": "Intermediate Glide",
+  "level": "intermediate",
+  "price": 400,
+  "startTime": "2025-04-08T10:00:00",
+  "endTime": "2025-04-08T12:00:00",
+  "location": {
+    "latitude": 45.5,
+    "longitude": 10.5
+  }
+}
+
+###
+
+### Update ski lesson with ID 1
+PUT http://localhost:7070/skilessons/1
+Content-Type: application/json
+
+{
+  "name": "Updated Beginner Basics",
+  "level": "beginner",
+  "price": 320,
+  "startTime": "2025-04-08T09:00:00",
+  "endTime": "2025-04-08T11:00:00",
+  "location": {
+    "latitude": 45.0,
+    "longitude": 10.0
+  }
+}
+
+###
+
+### Delete ski lesson with ID 1
+DELETE http://localhost:7070/skilessons/1
+
+###
+
+### Add instructor to ski lesson
+PUT http://localhost:7070/skilessons/2/instructors/1
+
+###
+
+### Get ski lessons by instructor
+GET http://localhost:7070/skilessons/instructor/1
+
+### Get ski lessons by level (e.g., beginner)
+GET http://localhost:7070/skilessons/level/beginner
+
+###
+
+### Get total price per instructor
+GET http://localhost:7070/skilessons/price/instructors
+
+### Get total external instruction duration per instructor
+GET http://localhost:7070/skilessons/duration/instructors
+
