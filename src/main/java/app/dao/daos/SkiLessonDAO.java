@@ -39,7 +39,10 @@ public class SkiLessonDAO implements IDAO<SkiLesson, Integer>, ISkiLessonInstruc
     @Override
     public SkiLesson getById(Integer id) {
         try (EntityManager em = emf.createEntityManager()) {
+            // Uses the entity manager to find a SkiLesson in the database.
+            // We specify that we want to search the SkiLesson entities and then find where the ID matches our param
             return em.find(SkiLesson.class, id);
+            // Returns the entire lesson entity with the corect ID (Return to Controller)
         }
     }
 

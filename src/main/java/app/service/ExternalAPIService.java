@@ -18,6 +18,7 @@ public class ExternalAPIService {
         String url = "https://apiprovider.cphbusinessapps.dk/skilesson/" + level.name();
 
         try {
+
             SkiInstructionWrapperDTO wrapper = mapper.readValue(new URL(url), SkiInstructionWrapperDTO.class);
             return wrapper.getLessons();
         } catch (IOException e) {

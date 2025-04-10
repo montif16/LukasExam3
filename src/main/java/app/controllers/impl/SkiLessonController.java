@@ -34,14 +34,27 @@ public class SkiLessonController implements IController<SkiLesson, SkiLessonDTO>
 
 
         public void getById(Context ctx) {
+            // Extracts the id part from the url. Let say we use Skilessons/1
+            // It would extract the 1 because the real url is skilessons/{id} so it extracts whats inside the placeholder { }
             int id = Integer.parseInt(ctx.pathParam("id"));
+
+            // Uses our DAO to fetch a lesson entity from the database. (Enter method)
             SkiLesson lesson = skiLessonDAO.getById(id);
             if (lesson == null)
+                // If there was nothing with that ID we throw this exception
                 throw new ApiException(404, "Ski lesson not found");
 
+            // We take the entity called "lesson" and makes it a DTO (Enter SkiLessonMapper)
             SkiLessonDTO dto = SkiLessonMapper.toDTO(lesson);
+            // Why did they ask for this... it has nothing to do with ID...
+            // Because the assignment said:
+            // 6.3 Add the ski lesson instructions to the response of the endpoint for getting a ski lesson by id.
+            // What their idea is with this, is beyond me.
+            // The lessons from the API doesn't even have an ID
             List<SkiInstructionDTO> external = ExternalAPIService.fetchInstructionsByLevel(lesson.getLevel());
-
+            // Build a json Responds that contains both the result of our SkiLessonDto dto
+            // Also puts the result from the external API into our responds.
+            // Dto wrapped in lesson and external wrapped in externalInstructions
             ctx.json(Map.of("lesson", dto, "externalInstructions", external));
         }
 
