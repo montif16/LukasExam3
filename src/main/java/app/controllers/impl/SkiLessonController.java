@@ -117,8 +117,9 @@ public class SkiLessonController implements IController<SkiLesson, SkiLessonDTO>
         } catch (IllegalArgumentException e) {
             throw new ApiException(400, "Invalid level: " + levelParam);
         }
-
+        // "skiLessonDAO.getAll()" returns a Set<SkiLesson>
         List<SkiLessonDTO> filtered = skiLessonDAO.getAll().stream()
+                //That is how this s in the lambda expression knows it's of type SkiLesson because of streams.
                 .filter(s -> s.getLevel() == level)
                 .map(SkiLessonMapper::toDTO)
                 .collect(Collectors.toList());
@@ -126,7 +127,8 @@ public class SkiLessonController implements IController<SkiLesson, SkiLessonDTO>
         ctx.json(filtered);
     }
     public void getTotalPricePerInstructor(Context ctx) {
-        List<Instructor> instructors = InstructorDAO.getInstance(HibernateConfig.getEntityManagerFactory("exam3")).getAll();
+        //List<Instructor> instructors = InstructorDAO.getInstance(HibernateConfig.getEntityManagerFactory("exam3")).getAll();
+        List<Instructor> instructors = instructorDAO.getAll();
 
         var result = instructors.stream()
                 .map(i -> {
